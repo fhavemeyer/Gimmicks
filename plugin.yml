@@ -1,0 +1,15 @@
+name: Gimmicks
+author: TeaJizzle
+version: 0.1
+main: com.gimmicknetwork.gimmicks.gimmicks
+
+commands:
+  team:
+    description: "Set team colour."
+    usage: "Usage: /team <colour> (Colours red, blue, green, gold, aqua, purple)"
+    permission: gimmick.team.use
+
+permissions:
+  gimmick.team.use:
+    description: "use team colours"
+    default: true

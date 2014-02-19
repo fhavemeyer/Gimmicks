@@ -1,0 +1,6 @@
+#Gimmicks Config
+
+#Coloured Names - depends on TagAPI
+nametags:
+  enabled: true
+  resetondeath: true

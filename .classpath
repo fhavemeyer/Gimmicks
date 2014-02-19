@@ -11,5 +11,10 @@
 			<attribute name="javadoc_location" value="http://jd.bukkit.org/rb/apidocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Tom/Downloads/TagAPI.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://kittehorg.github.io/TagAPI/apidocs/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
