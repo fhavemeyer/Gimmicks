@@ -28,7 +28,6 @@ public final class gimmicks extends JavaPlugin implements Listener {
 	public void onNameTag(AsyncPlayerReceiveNameTagEvent event) {
 		String name = event.getNamedPlayer().getName().toString();
 		ChatColor cc = teams.get(name);
-		getLogger().info("NAMETAG EVENT CALLED");
 		if (cc != null) {
 			event.setTag(cc + name);
 		} else {
