@@ -7,9 +7,17 @@ commands:
   team:
     description: "Set team colour."
     usage: "Usage: /team <colour> (Colours red, blue, green, gold, aqua, purple)"
-    permission: gimmick.team.use
+    permission: gimmicks.teams.use
+  teamtp:
+    description: "TP team to your location"
+    usage: "Usage: /teamtp <colour> (Colours red, blue, green, gold, aqua, purple)"
+    permission: gimmicks.teams.admin
+
 
 permissions:
-  gimmick.team.use:
+  gimmicks.teams.use:
     description: "use team colours"
-    default: true
+    default: false
+  gimmicks.teams.admin:
+    description: "admin team colours"
+    default: false
