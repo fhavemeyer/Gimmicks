@@ -1,3 +1,17 @@
 Any extra functionality for gimmick network minecraft servers
 
 depends on TagAPI
+
+Permissions:
+
+gimmicks.admin
+ - reload config
+ - spread players
+ 
+gimmicks.teams.user
+ - do /team <colour/leave> on self
+ 
+gimmicks.teams.admin
+ - do /team <colour/leave> <player1> <player2> <player3>... on others
+ 
+ 

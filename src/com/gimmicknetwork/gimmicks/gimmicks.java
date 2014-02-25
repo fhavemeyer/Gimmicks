@@ -1,5 +1,6 @@
 package com.gimmicknetwork.gimmicks;
 
+import java.awt.Image;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
@@ -12,6 +13,7 @@ public final class gimmicks extends JavaPlugin {
 	
 	//Hashmap for teams <player name><team ChatColor>
 	public HashMap<String, ChatColor> teams = new HashMap<String, ChatColor>();
+	public HashMap<String, Image> faceCache= new HashMap<String, Image>();
 	
 	listener listener = new listener(this);
 	hungercompass hungercompass = new hungercompass(this);
@@ -23,8 +25,6 @@ public final class gimmicks extends JavaPlugin {
 		getCommand("teamtp").setExecutor(new teams(this));
 		getCommand("gimmicks").setExecutor(new commands(this));
 		getCommand("spreadall").setExecutor(new commands(this));
-		
-		
 		this.saveDefaultConfig();
 		
 	}
@@ -33,8 +33,8 @@ public final class gimmicks extends JavaPlugin {
 		getLogger().info("[CivpvpInventory] plugin enabled!");
 	}
 	
-	
-
-	
+	public void addFaceCache(String playerName, Image i) {
+		faceCache.put(playerName, i);
+	}
 	
 }
