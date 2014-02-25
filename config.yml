@@ -4,3 +4,8 @@
 nametags:
   enabled: true
   resetondeath: true
+
+hungercompass:
+  enabled: true
+  range: 500.0
+  showplayer: false

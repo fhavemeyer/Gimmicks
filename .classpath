@@ -16,5 +16,6 @@
 			<attribute name="javadoc_location" value="http://kittehorg.github.io/TagAPI/apidocs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Tom/Downloads/DKLib.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,9 +1,17 @@
 name: Gimmicks
 author: TeaJizzle
-version: 0.1
+version: 0.1.2
 main: com.gimmicknetwork.gimmicks.gimmicks
 
 commands:
+  spreadall:
+    description: "Spreads all players"
+    usage: "Usage: /spreadplayers <x> <z> <spreadDistance> <maxRange>"
+    permission: gimmicks.admin
+  gimmicks:
+    description: "Reload Gimmicks config."
+    usage: "Usage: /gimmicks reload"
+    permission: gimmicks.admin
   team:
     description: "Set team colour."
     usage: "Usage: /team <colour> (Colours red, blue, green, gold, aqua, purple)"
@@ -17,7 +25,10 @@ commands:
 permissions:
   gimmicks.teams.use:
     description: "use team colours"
-    default: false
+    default: true
   gimmicks.teams.admin:
     description: "admin team colours"
+    default: false
+  gimmicks.admin:
+    description: "gimmicks admin"
     default: false
