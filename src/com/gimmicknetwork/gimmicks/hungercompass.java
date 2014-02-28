@@ -1,12 +1,20 @@
 package com.gimmicknetwork.gimmicks;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class hungercompass {
 
@@ -83,6 +91,44 @@ public class hungercompass {
 		return null;	
 	 }
 	 
+	 /*
+	  * Magic Chests
+	  */
 	 
-	 
+	public void remakeChest(Location loc) {
+		if(!loc.getBlock().getType().equals(Material.CHEST)) {
+			loc.getBlock().setType(Material.CHEST);
+		}
+		Chest c = (Chest) loc.getBlock();
+		c.getBlockInventory().setContents(randomItemStack());
+	}
+	
+	public ItemStack[] randomItemStack() {
+		String path = gimmicks.getDataFolder() + "/MagicChests/";
+		File folder = new File(path);
+		File[] listOfFiles = folder.listFiles();
+		Random r = new Random();
+		ItemStack[] i = loadItemStack(listOfFiles[r.nextInt(listOfFiles.length)]);
+		return i;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ItemStack[] loadItemStack(File file) {
+		YamlConfiguration c = YamlConfiguration.loadConfiguration(file);
+		ItemStack[] content = (ItemStack[])((List)c.get("inventory.content")).toArray(new ItemStack[0]);
+		return content;
+	}
+	
+	public void saveItemStack(ItemStack[] inv) {
+		String path = gimmicks.getDataFolder() + "/MagicChests/";
+		String name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), ".yml");
+        YamlConfiguration c = new YamlConfiguration();
+        c.set("inventory.content", inv);
+        try {
+			c.save(new File(path, name));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        gimmicks.getLogger().info("[Gimmicks] Magic chest contents saved to " + name);
+	}
 }

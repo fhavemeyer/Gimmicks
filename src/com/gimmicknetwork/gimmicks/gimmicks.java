@@ -2,6 +2,7 @@ package com.gimmicknetwork.gimmicks;
 
 import java.awt.Image;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -17,6 +18,7 @@ public final class gimmicks extends JavaPlugin {
 	public HashMap<ChatColor, Location> teamSpawn = new HashMap<ChatColor, Location>();
 	public HashMap<String, Image> faceCache= new HashMap<String, Image>();
 	public HashMap<String, Integer> killStreak= new HashMap<String, Integer>();
+	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
 	
 	
 	listener listener = new listener(this);
@@ -32,7 +34,16 @@ public final class gimmicks extends JavaPlugin {
 		getCommand("spreadall").setExecutor(new commands(this));
 		
 		this.saveDefaultConfig();
-		
+		//start timer for magic chests
+		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
+
+        @Override
+        public void run() {
+        	for (Entry<Location, Integer> entry : magicChests.entrySet()) {
+        		entry.setValue(entry.getValue() + 1);
+        	}
+        }
+        }, 0, 20);
 	}
 	
 	public void onDisable() {
