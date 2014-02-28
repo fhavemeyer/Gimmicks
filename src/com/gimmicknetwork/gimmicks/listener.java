@@ -8,15 +8,17 @@ import javax.imageio.ImageIO;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
 import com.bobacadodl.imgmessage.ImageChar;
@@ -51,7 +53,7 @@ public class listener implements Listener {
 	
 	//Right click from compass
 	
-	@EventHandler
+	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		if (gimmicks.getConfig().getBoolean("hungercompass.enabled", false)) {
 			if (event.getPlayer().getItemInHand().getType().equals(Material.COMPASS) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
@@ -100,23 +102,65 @@ public class listener implements Listener {
 	
 	//show death message
 	@EventHandler
-	public void onPlayerDeath(PlayerDeathEvent event) {
-		Player p = (Player) event.getEntity();
-		if (gimmicks.faceCache.get(p.getName().toString()) != null){
-			BufferedImage imageToSend;
-			//URL url = new URL("https://minotar.net/avatar/" + p.getName().toString() + "/8.png");
-			//imageToSend = ImageIO.read(url);
-			
-			imageToSend = (BufferedImage) gimmicks.faceCache.get(p.getName().toString());
-			
-			new ImageMessage(imageToSend, 8, ImageChar.BLOCK.getChar()).appendText(
-					 "",
-					 "",
-					 "",
-					 p.getName().toString() + " was slain.",
-					 "Good night, sweet prince.",
-					 "RIP IN PEICES"
-					 ).sendToPlayers(Bukkit.getOnlinePlayers());
+	public void onDeath(EntityDeathEvent event) {
+		if (event.getEntity() instanceof Player) {
+			Player p = (Player) event.getEntity();
+			if (gimmicks.faceCache.get(p.getName().toString()) != null){
+				BufferedImage imageToSend;			
+				imageToSend = (BufferedImage) gimmicks.faceCache.get(p.getName().toString());
+				String slainMsg = p.getName().toString() + " was slain.";
+				String killerMsg = "";
+				String extraMsg = "Good night, sweet prince.";
+				
+				//slain messages
+				if (p.getKiller() != null && p.getKiller() instanceof Player) {
+					slainMsg = p.getName().toString() + " was slain by " + p.getKiller().getName() + ".";
+					Player killer = (Player) p.getKiller();
+					
+					//kill streak of killer
+					if ( gimmicks.killStreak.get(p.getKiller().getName()) != null) {
+						int killerKillStreak = gimmicks.killStreak.get(killer.getName()) + 1;
+						gimmicks.killStreak.put(killer.getName(), killerKillStreak);
+						killerMsg = killer.getName() + " has a killstreak of " + Integer.toString(killerKillStreak);
+						if (killerKillStreak >= 5) { extraMsg = killer.getName() + " is " + ChatColor.RED + "DOMINATING!"; }
+						if (killerKillStreak >= 10) { extraMsg = killer.getName() + " is on a " + ChatColor.RED + ChatColor.BOLD + "RAMPAGE!"; }
+						if (killerKillStreak >= 15) { extraMsg = killer.getName() + " is " + ChatColor.AQUA + ChatColor.BOLD + "GOD-LIKE!"; }
+					} else {
+						gimmicks.killStreak.put(killer.getName(), 1);
+						killerMsg = killer.getName() + " now has a killstreak of 1";
+					}
+					
+				}
+				
+				//remove killstreak
+				if (gimmicks.killStreak.get(p.getName()) != null) {
+					gimmicks.killStreak.remove(p.getName());
+				}
+				
+				
+				
+				
+				new ImageMessage(imageToSend, 8, ImageChar.BLOCK.getChar()).appendText(
+						 "",
+						 "",
+						 "",
+						 slainMsg,
+						 killerMsg,
+						 extraMsg
+						 ).sendToPlayers(Bukkit.getOnlinePlayers());
+			}
+		}
+	}
+	
+	//respawn at team spawn if set
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent event) {
+		if (gimmicks.teams.get(event.getPlayer().getName().toString()) != null) {
+			ChatColor t = gimmicks.teams.get(event.getPlayer().getName().toString());
+			if (gimmicks.teamSpawn.get(t) != null) {
+				Location loc = gimmicks.teamSpawn.get(t);
+				event.setRespawnLocation(loc);
+			}
 		}
 	}
 	

@@ -77,9 +77,37 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
 				    					break;			
 				    	default:		sender.sendMessage("Invalid team");
 				    					break;
-						}
 					}
-				
+				}
+			}
+		}
+		
+		if (cmd.getName().equalsIgnoreCase("teamsetspawn")) {
+			if (!(sender instanceof Player)) {
+				sender.sendMessage("Only players can run this command");
+			} else {
+				Player p = (Player) sender;
+				if(args.length > 0) {						
+					Location loc = p.getLocation();
+					switch (args[0]) {
+						case "red":		teamSetSpawn(ChatColor.RED, loc);
+				    					break;
+				    	case "blue":	teamSetSpawn(ChatColor.BLUE, loc);
+										break;
+				    	case "green":	teamSetSpawn(ChatColor.GREEN, loc);
+										break;
+				    	case "purple":	teamSetSpawn(ChatColor.LIGHT_PURPLE, loc);
+										break;
+				    	case "gold":	teamSetSpawn(ChatColor.GOLD, loc);
+										break;
+				    	case "aqua":	teamSetSpawn(ChatColor.AQUA, loc);
+				    					break;			
+				    	default:		sender.sendMessage("Invalid team");
+				    					break;
+					}
+				} else {
+					sender.sendMessage("Usage: /teamsetspawn <colour>");
+				}
 			}
 		}
 		return true;
@@ -116,9 +144,16 @@ public boolean onCommand(CommandSender sender, Command cmd, String label, String
 		for (Entry<String, ChatColor> entry : this.gimmicks.teams.entrySet())
 		{
 		    if (entry.getValue().equals(t)) {
-		    	Bukkit.getPlayer(entry.getKey()).teleport(loc);
+		    	Player p = Bukkit.getPlayer(entry.getKey());
+		    	if (p != null) {
+		    		p.teleport(loc);
+		    	}
 		    }
 		}
+	}
+	
+	public void teamSetSpawn (ChatColor t, Location loc) {
+		this.gimmicks.teamSpawn.put(t, loc);
 	}
 	
 }

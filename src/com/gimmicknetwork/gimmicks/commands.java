@@ -25,17 +25,17 @@ public class commands implements CommandExecutor
 		}
 		
 		if (cmd.getName().equalsIgnoreCase("spreadall")) {
-			if (args.length == 4) {
-			Player[] players = Bukkit.getOnlinePlayers();
-				String c = "spreadplayers " + args[0] + " " + args[1] + " " + args[2] + " " + args[3] + " false";
-				for (Player p : players) {
-					c = c + " " + p.getName().toString();
+			if (args.length == 3) {
+				sender.sendMessage("[Gimmicks] Spreading players.");
+				for (Player p : Bukkit.getOnlinePlayers()) {
+					if (p != null) {
+						gimmicks.hungercompass.spreadPlayer(p.getWorld(), p, Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+					}
 				}
-				gimmicks.getLogger().info("[Gimmicks] Running command:" + c);
-				sender.getServer().dispatchCommand(Bukkit.getConsoleSender(), "command");
+			} else {
+				sender.sendMessage("Usage: /spreadall <center x> <center z> <radius>");
 			}
 		}
-		
 		return true;
 	}
   
