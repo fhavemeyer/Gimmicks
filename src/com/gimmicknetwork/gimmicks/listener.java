@@ -105,6 +105,8 @@ public class listener implements Listener {
 	public void onDeath(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player p = (Player) event.getEntity();
+			//THUNDER STRUCK, JUST LOOK AT THE MESS YOU MADE
+			p.getWorld().strikeLightningEffect(p.getLocation().add(0, 100, 0));
 			if (gimmicks.faceCache.get(p.getName().toString()) != null){
 				BufferedImage imageToSend;			
 				imageToSend = (BufferedImage) gimmicks.faceCache.get(p.getName().toString());
