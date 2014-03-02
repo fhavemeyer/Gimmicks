@@ -20,6 +20,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
+import org.kitteh.tag.TagAPI;
 
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
@@ -105,6 +106,14 @@ public class listener implements Listener {
 	public void onDeath(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player p = (Player) event.getEntity();
+			// Teams - check if resetondeath is enabled and make the player leave their team
+			if (gimmicks.getConfig().getBoolean("teams.resetondeath")) {
+				if (gimmicks.teams.get(p.getName().toString()) != null) {
+					gimmicks.teams.remove(p.getName().toString());
+					TagAPI.refreshPlayer(p);
+				}
+			}
+			
 			//THUNDER STRUCK, JUST LOOK AT THE MESS YOU MADE
 			p.getWorld().strikeLightningEffect(p.getLocation().add(0, 100, 0));
 			if (gimmicks.faceCache.get(p.getName().toString()) != null){
@@ -139,9 +148,6 @@ public class listener implements Listener {
 					gimmicks.killStreak.remove(p.getName());
 				}
 				
-				
-				
-				
 				new ImageMessage(imageToSend, 8, ImageChar.BLOCK.getChar()).appendText(
 						 "",
 						 "",
@@ -157,6 +163,10 @@ public class listener implements Listener {
 	//respawn at team spawn if set
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent event) {
+		//check if teams are enabled
+		if(!gimmicks.getConfig().getBoolean("teams.enabled")) {
+			return;
+		}
 		if (gimmicks.teams.get(event.getPlayer().getName().toString()) != null) {
 			ChatColor t = gimmicks.teams.get(event.getPlayer().getName().toString());
 			if (gimmicks.teamSpawn.get(t) != null) {
@@ -165,6 +175,10 @@ public class listener implements Listener {
 			}
 		}
 	}
+	
+	
+	// Populate magic chest contents
+
 	
 	
 	

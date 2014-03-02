@@ -2,15 +2,18 @@ package com.gimmicknetwork.gimmicks;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -103,8 +106,92 @@ public class hungercompass {
 		c.getBlockInventory().setContents(randomItemStack());
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void setChest(Location loc) {
+		int t = gimmicks.getConfig().getInt("magicchests.respawn", 0);
+		gimmicks.magicChests.put(loc, t);
+		YamlConfiguration c = new YamlConfiguration();
+		//load any current chests from MagicChests.yml
+		try {
+			c.load(gimmicks.getDataFolder() + "/MagicChests.yml");
+		} catch (IOException e) {
+			e.printStackTrace();
+			
+			//save empty config file for use
+	        try {
+				c.save(new File(gimmicks.getDataFolder() + "/MagicChests.yml"));
+				gimmicks.getLogger().info("[Gimmicks] New MagicChests.yml generated.");
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}
+			
+			
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+			gimmicks.getLogger().info("[Gimmicks] MagicChests.yml corrupt, saving new file.");
+			File f = new File(gimmicks.getDataFolder() + "/MagicChests.yml");
+			f.renameTo(new File(gimmicks.getDataFolder() + "/MagicChests.yml.broken"));
+		}
+		
+		//turn saved locations into a list and add the new loc
+		List<String> locs = new ArrayList<String>();
+		
+		if ((List<String[]>) c.getList("chests") != null) {
+			locs.addAll((List<String>) c.getList("chests"));
+		}
+		if (loc != null) {
+			locs.add(serializeLoc(loc));
+			c.set("chests", locs);
+		}
+		
+		//save config
+        try {
+			c.save(new File(gimmicks.getDataFolder() + "/MagicChests.yml"));
+			gimmicks.getLogger().info("[Gimmicks] Chest saved.");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+ 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void loadChests() {
+		YamlConfiguration c = new YamlConfiguration();
+		//load any current chests from MagicChests.yml
+		try {
+			c.load(gimmicks.getDataFolder() + "/MagicChests.yml");
+		} catch (IOException e) {
+			e.printStackTrace();
+			//save empty config file for use
+	        try {
+				c.save(new File(gimmicks.getDataFolder() + "/MagicChests.yml"));
+				gimmicks.getLogger().info("[Gimmicks] New MagicChests.yml generated.");
+			} catch (IOException e2) {
+				e2.printStackTrace();
+			}	
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+			gimmicks.getLogger().info("[Gimmicks] MagicChests.yml corrupt, saving new file.");
+			File f = new File(gimmicks.getDataFolder() + "/MagicChests.yml");
+			f.renameTo(new File(gimmicks.getDataFolder() + "/MagicChests.yml.broken"));
+		}
+		
+		List<String> locs = new ArrayList<String>();
+		
+		if ((List<String[]>) c.getList("chests") != null) {
+			locs.addAll((List<String>) c.getList("chests"));
+		}
+		int t = gimmicks.getConfig().getInt("magicchests.respawn", 0);
+		//take each loc from config and add it to hashmap
+		for (String loc : locs) {
+			Location l = deserializeLoc(loc);
+			gimmicks.magicChests.put(l, t);
+		}
+		gimmicks.getLogger().info("[Gimmicks] MagicChests.yml loaded");
+	}
+	
 	public ItemStack[] randomItemStack() {
-		String path = gimmicks.getDataFolder() + "/MagicChests/";
+		String path = gimmicks.getDataFolder() + "/Loot/";
 		File folder = new File(path);
 		File[] listOfFiles = folder.listFiles();
 		Random r = new Random();
@@ -120,7 +207,7 @@ public class hungercompass {
 	}
 	
 	public void saveItemStack(ItemStack[] inv) {
-		String path = gimmicks.getDataFolder() + "/MagicChests/";
+		String path = gimmicks.getDataFolder() + "/Loot/";
 		String name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), ".yml");
         YamlConfiguration c = new YamlConfiguration();
         c.set("inventory.content", inv);
@@ -130,5 +217,14 @@ public class hungercompass {
 			e.printStackTrace();
 		}
         gimmicks.getLogger().info("[Gimmicks] Magic chest contents saved to " + name);
+	}
+	
+	public String serializeLoc(Location loc){
+	    return loc.getWorld().getName()+","+loc.getX()+","+loc.getY()+","+loc.getZ();
+	}
+	 
+	public Location deserializeLoc(String str){
+	    String[] loc = str.split(",");
+	    return new Location(Bukkit.getWorld(loc[0]), Double.parseDouble(loc[1]), Double.parseDouble(loc[2]), Double.parseDouble(loc[3]));
 	}
 }

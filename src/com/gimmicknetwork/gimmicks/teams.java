@@ -19,8 +19,14 @@ public class teams implements CommandExecutor {
 		this.gimmicks = gimmicks;
 	}
 	
-public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
+		//check if teams are disabled
+		if (gimmicks.getConfig().getBoolean("teams.enabled", false)) {
+			sender.sendMessage("[Gimmicks] Teams are disabled.");
+			return true;
+		}
+	
 		//SETTING TEAMS (/team)
 		if (cmd.getName().equalsIgnoreCase("team")) {
 			if (!(sender instanceof Player)) {

@@ -2,10 +2,13 @@ package com.gimmicknetwork.gimmicks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.kitteh.tag.TagAPI;
 
 public class commands implements CommandExecutor 
 {
@@ -15,11 +18,20 @@ public class commands implements CommandExecutor
 		this.gimmicks = gimmicks;
 	}
   
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
 		if (cmd.getName().equalsIgnoreCase("gimmicks") && args.length == 1) {
 			if (args[0].equals("reload")) {
 				this.gimmicks.reloadConfig();
+				//clear all current teams if it's now disabled
+				if (!gimmicks.getConfig().getBoolean("teams.enabled", false)) {
+					gimmicks.teams.clear();
+					for (Player p : Bukkit.getOnlinePlayers()) {
+						TagAPI.refreshPlayer(p);
+					}
+					sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Teams cleared.");
+				}
 				sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Configuration reloaded.");
 			}
 		}
@@ -36,6 +48,37 @@ public class commands implements CommandExecutor
 				sender.sendMessage("Usage: /spreadall <center x> <center z> <radius>");
 			}
 		}
+		
+		/*
+		 * Magic Chests
+		 */
+		
+		if (cmd.getName().equalsIgnoreCase("setchest")) {
+			if(!(sender instanceof Player)) {
+				sender.sendMessage("[Gimmicks] Only players can run this command.");
+			} else {
+				Player p = (Player) sender;
+				Block b = p.getTargetBlock(null, 5);
+				if (b.getType() == Material.CHEST) {
+					if (gimmicks.magicChests.get(b.getLocation()) == null) {
+						p.sendMessage("[Gimmicks] Chest converted to Magic Chest");
+						gimmicks.hungercompass.setChest(b.getLocation());
+					} else {
+						p.sendMessage("[Gimmicks] This is already a Magic Chest");
+					}
+					
+				} else {
+					p.sendMessage("[Gimmicks] You need to target a chest.");
+				}
+				
+			}
+		}
+		
+		if (cmd.getName().equalsIgnoreCase("setloots")) {
+			
+		}
+		
+		
 		return true;
 	}
   

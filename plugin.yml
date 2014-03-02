@@ -1,6 +1,6 @@
 name: Gimmicks
 author: TeaJizzle
-version: 0.1.7
+version: 0.1.8
 main: com.gimmicknetwork.gimmicks.gimmicks
 
 depends: [TagAPI]
@@ -26,6 +26,14 @@ commands:
     description: "Set team spawn"
     usage: "Usage: /teamsetspawn <colour> (Colours red, blue, green, gold, aqua, purple)"
     permission: gimmicks.teams.admin
+  setchest:
+    description: "Set magic chest"
+    usage: "Usage: /setchest while looking at a chest"
+    permission: gimmicks.admin
+  setloot:
+    description: "Set loot"
+    usage: "Usage: /setloot while looking at a chest"
+    permission: gimmicks.admin  
 
 
 permissions:

@@ -20,11 +20,13 @@ public final class gimmicks extends JavaPlugin {
 	public HashMap<String, Integer> killStreak= new HashMap<String, Integer>();
 	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
 	
+	public int chestDelay = this.getConfig().getInt("magicchests.respawn");
 	
 	listener listener = new listener(this);
 	hungercompass hungercompass = new hungercompass(this);
 	
 	public void onEnable() {
+		this.saveDefaultConfig();
 		this.getServer().getPluginManager().registerEvents(listener, this);
 		getLogger().info("[Gimmicks] plugin enabled!");
 		getCommand("team").setExecutor(new teams(this));
@@ -32,15 +34,28 @@ public final class gimmicks extends JavaPlugin {
 		getCommand("teamsetspawn").setExecutor(new teams(this));
 		getCommand("gimmicks").setExecutor(new commands(this));
 		getCommand("spreadall").setExecutor(new commands(this));
+		getCommand("setchest").setExecutor(new commands(this));
+		getCommand("setloot").setExecutor(new commands(this));
 		
-		this.saveDefaultConfig();
+		//populate magic chests hashmap from saved chests
+		this.magicChests.clear();
+		if(this.getConfig().getBoolean("magicchests.enabled", false)) {
+			hungercompass.loadChests();
+		}
+				
+		
 		//start timer for magic chests
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-
+			
         @Override
         public void run() {
         	for (Entry<Location, Integer> entry : magicChests.entrySet()) {
-        		entry.setValue(entry.getValue() + 1);
+        		if (entry.getValue() >= chestDelay) {
+        			getLogger().info("[Gimmicks] A chest would be reloaded.");
+        			entry.setValue(0);
+        		} else {
+        			entry.setValue(entry.getValue() + 1);
+        		}
         	}
         }
         }, 0, 20);

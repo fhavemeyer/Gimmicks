@@ -1,11 +1,28 @@
 #Gimmicks Config
 
-#Coloured Names - depends on TagAPI
-nametags:
+## Teams - depends on TagAPI
+# enabled (boolean)		= enables teams with coloured name tags
+# resetondeath (boolean)= players leave team on death
+
+teams:
   enabled: true
-  resetondeath: true
+  resetondeath: false
+
+## Hunger Compass
+# enabled (boolean) 	= enables tracking compass
+# range (double) 		= max range to track players
+# showplayer (boolean) 	= show name of player being tracked
 
 hungercompass:
   enabled: true
   range: 500.0
   showplayer: false
+  
+  
+## Magic Chests
+# enabled (boolean) = enables magicchest
+# respawn (int) = time in seconds before chests restock
+
+magicchests:
+  enabled: true
+  respawn: 300
