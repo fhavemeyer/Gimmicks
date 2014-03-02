@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gimmicknetwork.gimmicks.teams;
@@ -51,7 +53,15 @@ public final class gimmicks extends JavaPlugin {
         public void run() {
         	for (Entry<Location, Integer> entry : magicChests.entrySet()) {
         		if (entry.getValue() >= chestDelay) {
-        			getLogger().info("[Gimmicks] A chest would be reloaded.");
+        			getLogger().info("[Gimmicks] Chest respawned.");
+        			if (entry.getKey().getBlock().getType() == Material.CHEST) {
+        				Chest c = (Chest) entry.getKey().getBlock().getState();
+        				c.getInventory().setContents(hungercompass.randomItemStack());
+        			} else {
+        				hungercompass.remakeChest(entry.getKey());
+        				Chest c = (Chest) entry.getKey().getBlock().getState();
+        				c.getInventory().setContents(hungercompass.randomItemStack());
+        			}
         			entry.setValue(0);
         		} else {
         			entry.setValue(entry.getValue() + 1);

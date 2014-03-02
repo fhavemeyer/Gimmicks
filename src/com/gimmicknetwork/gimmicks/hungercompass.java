@@ -102,7 +102,7 @@ public class hungercompass {
 		if(!loc.getBlock().getType().equals(Material.CHEST)) {
 			loc.getBlock().setType(Material.CHEST);
 		}
-		Chest c = (Chest) loc.getBlock();
+		Chest c = (Chest) loc.getBlock().getState();
 		c.getBlockInventory().setContents(randomItemStack());
 	}
 	
@@ -208,7 +208,7 @@ public class hungercompass {
 	
 	public void saveItemStack(ItemStack[] inv) {
 		String path = gimmicks.getDataFolder() + "/Loot/";
-		String name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), ".yml");
+		String name = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(8), "yml");
         YamlConfiguration c = new YamlConfiguration();
         c.set("inventory.content", inv);
         try {
@@ -227,4 +227,6 @@ public class hungercompass {
 	    String[] loc = str.split(",");
 	    return new Location(Bukkit.getWorld(loc[0]), Double.parseDouble(loc[1]), Double.parseDouble(loc[2]), Double.parseDouble(loc[3]));
 	}
+
+
 }
