@@ -34,6 +34,10 @@ commands:
     description: "Set loot"
     usage: "Usage: /setloot while looking at a chest"
     permission: gimmicks.admin  
+  muteall:
+    description: "Toggle global mute"
+    usage: "Usage: /muteall"
+    permission: gimmicks.admin  
 
 
 permissions:

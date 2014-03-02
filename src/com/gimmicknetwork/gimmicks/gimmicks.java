@@ -21,6 +21,7 @@ public final class gimmicks extends JavaPlugin {
 	public HashMap<String, Image> faceCache= new HashMap<String, Image>();
 	public HashMap<String, Integer> killStreak= new HashMap<String, Integer>();
 	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
+	public boolean muteAll = false;
 	
 	public int chestDelay = this.getConfig().getInt("magicchests.respawn");
 	
@@ -38,6 +39,7 @@ public final class gimmicks extends JavaPlugin {
 		getCommand("spreadall").setExecutor(new commands(this));
 		getCommand("setchest").setExecutor(new commands(this));
 		getCommand("setloot").setExecutor(new commands(this));
+		getCommand("muteall").setExecutor(new commands(this));
 		
 		//populate magic chests hashmap from saved chests
 		this.magicChests.clear();

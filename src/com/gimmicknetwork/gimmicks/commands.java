@@ -97,6 +97,16 @@ public class commands implements CommandExecutor
 			}
 		}
 		
+		if (cmd.getName().equalsIgnoreCase("muteall")) {
+			gimmicks.muteAll = !gimmicks.muteAll;
+			if (gimmicks.muteAll) {
+				sender.sendMessage("[Gimmicks] Mute All on!");
+			} else {
+				sender.sendMessage("[Gimmicks] Mute All off!");
+			}
+			
+		}
+		
 		
 		return true;
 	}

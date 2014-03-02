@@ -16,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -177,9 +178,16 @@ public class listener implements Listener {
 	}
 	
 	
-	// Populate magic chest contents
-
-	
-	
+	/*
+	 * Player mute	
+	 */
+	@EventHandler(priority=EventPriority.HIGHEST)
+	public void onChat(AsyncPlayerChatEvent event) {
+		if (gimmicks.muteAll) {
+			if (!event.getPlayer().hasPermission("gimmicks.admin")) {
+				event.setCancelled(true);
+			}
+		}
+	}
 	
 }
