@@ -53,7 +53,6 @@ public final class gimmicks extends JavaPlugin {
         public void run() {
         	for (Entry<Location, Integer> entry : magicChests.entrySet()) {
         		if (entry.getValue() >= chestDelay) {
-        			getLogger().info("[Gimmicks] Chest respawned.");
         			if (entry.getKey().getBlock().getType() == Material.CHEST) {
         				Chest c = (Chest) entry.getKey().getBlock().getState();
         				c.getInventory().setContents(hungercompass.randomItemStack());
