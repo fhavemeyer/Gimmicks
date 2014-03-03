@@ -181,9 +181,11 @@ public class ImageMessage {
     
     public void sendToPlayers(Player[] players) {
         for (Player player: players) {
-	    	for (String line : lines) {
-	            player.sendMessage(line);
-	        }
+        	if (player != null) {
+		    	for (String line : lines) {
+		            player.sendMessage(line);
+		        }
+        	}
         }
     }
 }

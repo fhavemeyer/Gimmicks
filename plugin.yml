@@ -1,6 +1,6 @@
 name: Gimmicks
 author: TeaJizzle
-version: 0.1.8
+version: 0.1.9
 main: com.gimmicknetwork.gimmicks.gimmicks
 
 depends: [TagAPI]
@@ -37,13 +37,21 @@ commands:
   muteall:
     description: "Toggle global mute"
     usage: "Usage: /muteall"
+    permission: gimmicks.admin 
+  healall:
+    description: "Heal and feed all players."
+    usage: "Usage: /healall"
+    permission: gimmicks.admin
+  playintro:
+    description: "Play hunger games introduction."
+    usage: "Usage: /playinfo"
     permission: gimmicks.admin  
 
 
 permissions:
   gimmicks.teams.use:
     description: "use team colours"
-    default: true
+    default: false
   gimmicks.teams.admin:
     description: "admin team colours"
     default: false

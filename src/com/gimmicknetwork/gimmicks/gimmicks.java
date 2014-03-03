@@ -21,7 +21,10 @@ public final class gimmicks extends JavaPlugin {
 	public HashMap<String, Image> faceCache= new HashMap<String, Image>();
 	public HashMap<String, Integer> killStreak= new HashMap<String, Integer>();
 	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
+	public HashMap<String, Integer> compassLastUse = new HashMap<String, Integer>();
 	public boolean muteAll = false;
+	public boolean compassOn = getConfig().getBoolean("hungercompass.enabled", false);
+	public boolean introPlaying = false;
 	
 	public int chestDelay = this.getConfig().getInt("magicchests.respawn");
 	
@@ -40,6 +43,8 @@ public final class gimmicks extends JavaPlugin {
 		getCommand("setchest").setExecutor(new commands(this));
 		getCommand("setloot").setExecutor(new commands(this));
 		getCommand("muteall").setExecutor(new commands(this));
+		getCommand("healall").setExecutor(new commands(this));
+		getCommand("playintro").setExecutor(new commands(this));
 		
 		//populate magic chests hashmap from saved chests
 		this.magicChests.clear();
@@ -47,7 +52,6 @@ public final class gimmicks extends JavaPlugin {
 			hungercompass.loadChests();
 		}
 				
-		
 		//start timer for magic chests
 		getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
 			
@@ -68,6 +72,7 @@ public final class gimmicks extends JavaPlugin {
         			entry.setValue(entry.getValue() + 1);
         		}
         	}
+        	
         }
         }, 0, 20);
 	}

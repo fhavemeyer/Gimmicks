@@ -57,8 +57,17 @@ public class listener implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (gimmicks.getConfig().getBoolean("hungercompass.enabled", false)) {
+		if (gimmicks.compassOn) {
 			if (event.getPlayer().getItemInHand().getType().equals(Material.COMPASS) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+				if(gimmicks.compassLastUse.get(event.getPlayer().getName().toString()) != null) {
+					int lastUse = gimmicks.compassLastUse.get(event.getPlayer().getName().toString());
+					if(lastUse < 30) {
+						int timeLeft = 30 - lastUse;
+						event.getPlayer().sendMessage(ChatColor.RED + "You need to wait " + ChatColor.WHITE + Integer.toString(timeLeft) + " seconds before you can track again");
+						event.setCancelled(true);
+						return;
+					}
+				}
 				double range = gimmicks.getConfig().getDouble("hungercompass.range", 500d);
 				Player target = null;
 				target = gimmicks.hungercompass.getNearest(event.getPlayer(), range);
@@ -72,6 +81,7 @@ public class listener implements Listener {
 				} else {
 					event.getPlayer().sendMessage(ChatColor.RED + "There is nobody in range.");
 				}
+				gimmicks.compassLastUse.put(event.getPlayer().getName().toString(), 0);
 				event.setCancelled(true);
 			}
 		}		

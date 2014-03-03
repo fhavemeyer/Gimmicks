@@ -107,6 +107,29 @@ public class commands implements CommandExecutor
 			
 		}
 		
+		if (cmd.getName().equalsIgnoreCase("healall")) {
+			for (Player p : Bukkit.getOnlinePlayers()) {
+				if(p != null) {
+					p.setHealth(20d);
+					p.setFoodLevel(20);
+					p.setSaturation(20f);
+				}
+			}
+			
+		}
+		
+		if (cmd.getName().equalsIgnoreCase("compasstracker")) {
+			gimmicks.compassOn = !gimmicks.compassOn;
+			if (gimmicks.muteAll) {
+				sender.sendMessage("[Gimmicks] Compass tracking enabled!");
+			} else {
+				sender.sendMessage("[Gimmicks] Compass tracking!");
+			}
+		}
+		
+		if (cmd.getName().equalsIgnoreCase("playintro")) {
+			gimmicks.hungercompass.playIntro();
+		}
 		
 		return true;
 	}

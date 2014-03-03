@@ -8,13 +8,18 @@ teams:
   enabled: true
   resetondeath: false
 
+## Face Death Messages
+# enabled (boolean) 	= show player faces in chat on death
+facedeathmessages:
+  enabled: true
+
 ## Hunger Compass
 # enabled (boolean) 	= enables tracking compass
 # range (double) 		= max range to track players
 # showplayer (boolean) 	= show name of player being tracked
 
 hungercompass:
-  enabled: true
+  enabled: false
   range: 500.0
   showplayer: false
   
@@ -24,5 +29,5 @@ hungercompass:
 # respawn (int) = time in seconds before chests restock
 
 magicchests:
-  enabled: true
+  enabled: false
   respawn: 300

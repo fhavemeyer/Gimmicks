@@ -1,17 +1,51 @@
-Any extra functionality for gimmick network minecraft servers
+Adds extra functionality for gimmick network minecraft servers.
 
-depends on TagAPI
+Teams
+
+Allows players and admins to assign team colours, player nametags appear this colour. Ideal for group fights.
+
+HungerGames
+
+Adds a load of commands useful for hunger games or similar events includes the following:
+
+Fancy death messages (with the player's face)
+Player spreading.
+Magic Chests - chests that respawn with random content from loot table
+Mute all toggle
+Heal/feed all
+Intro to play
+Compass player tracking - track the nearest player with a right click of a compass
+
+Installation
+
+Put gimmicks.jar in your plugins folder
+Depends on TagAPI: http://dev.bukkit.org/bukkit-plugins/tag/
+Run once for config to generate
+Config can be reloaded without a full reload with /gimmicks reload
+Not completely /reload safe - player faces get cached on login, a reload would stop their faces showing up in death messages
+
+Relies on the following permissions to function:
+
+Recommend that you give gimmicks.admin and gimmicks.teams.admin to all OPs, if it's an event with fixed teams don't give the players gimmicks.teams.user
 
 Permissions:
 
 gimmicks.admin
  - reload config
  - spread players
+ - do /compasson to enable compass tracking mid-game
+ - do /setloot to add a chest's content to the random loot table
+ - do /setchest to turn a chest into a Magic Chest
+ - do /muteall to toggle global mute for players without gimmicks.admin
+ - do /heal all to give all players max health, max hunger and max saturation
+ - do /playintro to play hunger games intro (currently hard coded and hacky)
  
 gimmicks.teams.user
  - do /team <colour/leave> on self
  
 gimmicks.teams.admin
  - do /team <colour/leave> <player1> <player2> <player3>... on others
+ - do /teamtp <colour> to teleport all players of given team to your location
+ - do /teamsetspawn <colour> to set respawn location for given team
  
  
