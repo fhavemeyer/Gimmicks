@@ -1,10 +1,6 @@
 package com.gimmicknetwork.gimmicks;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,9 +26,11 @@ public class listener implements Listener {
 	
 	private Gimmick gimmicks; // pointer to your main class, unrequired if you don't need methods from the main class
 	private FaceManager faceCacheManager;
+	private KillStreakManager killStreakManager;
 	 
 	public listener(Gimmick gimmicks) {
 		faceCacheManager = new FaceManager(gimmicks);
+		killStreakManager = new KillStreakManager();
 		this.gimmicks = gimmicks;
 	}
 	
@@ -123,23 +121,21 @@ public class listener implements Listener {
 						Player killer = (Player) p.getKiller();
 						
 						//kill streak of killer
-						if ( gimmicks.killStreak.get(p.getKiller().getName()) != null) {
-							int killerKillStreak = gimmicks.killStreak.get(killer.getName()) + 1;
-							gimmicks.killStreak.put(killer.getName(), killerKillStreak);
+						if (killStreakManager.hasKillStreak(killer)) {
+							killStreakManager.incrementKillStreak(killer);
+							int killerKillStreak = killStreakManager.getKillStreak(killer);
 							killerMsg = killer.getName() + " has a killstreak of " + Integer.toString(killerKillStreak);
 							if (killerKillStreak >= 5) { extraMsg = killer.getName() + " is " + ChatColor.RED + "DOMINATING!"; }
 							if (killerKillStreak >= 10) { extraMsg = killer.getName() + " is on a " + ChatColor.RED + ChatColor.BOLD + "RAMPAGE!"; }
 							if (killerKillStreak >= 15) { extraMsg = killer.getName() + " is " + ChatColor.AQUA + ChatColor.BOLD + "GOD-LIKE!"; }
 						} else {
-							gimmicks.killStreak.put(killer.getName(), 1);
+							killStreakManager.incrementKillStreak(killer);
 							killerMsg = killer.getName() + " now has a killstreak of 1";
 						}
 					}
 					
 					//remove killstreak
-					if (gimmicks.killStreak.get(p.getName()) != null) {
-						gimmicks.killStreak.remove(p.getName());
-					}
+					killStreakManager.clearKillStreakForPlayer(p);
 					
 					new ImageMessage(imageToSend, 8, ImageChar.BLOCK.getChar()).appendText(
 							 "",
