@@ -27,10 +27,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
 
-public class hungercompass {
+public class HungerCompass {
 
 	private Gimmick gimmicks;
-	public hungercompass(Gimmick gimmicks) {
+	public HungerCompass(Gimmick gimmicks) {
 		this.gimmicks = gimmicks;
 	}
 	

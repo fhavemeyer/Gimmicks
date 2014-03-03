@@ -1,6 +1,7 @@
 package com.gimmicknetwork.gimmicks;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,13 +23,15 @@ import com.bobacadodl.imgmessage.ImageMessage;
 import com.gimmicknetwork.gimmicks.Gimmick;
 import com.gimmicknetwork.gimmicks.teams.Teams;
 
-public class listener implements Listener {
+public class GimmickEventListener implements Listener {
 	
 	private Gimmick gimmicks; // pointer to your main class, unrequired if you don't need methods from the main class
 	private FaceManager faceCacheManager;
 	private KillStreakManager killStreakManager;
+	
+	private HashMap<String, Integer> compassLastUse = new HashMap<String, Integer>();
 	 
-	public listener(Gimmick gimmicks) {
+	public GimmickEventListener(Gimmick gimmicks) {
 		faceCacheManager = new FaceManager(gimmicks);
 		killStreakManager = new KillStreakManager();
 		this.gimmicks = gimmicks;
@@ -56,31 +59,32 @@ public class listener implements Listener {
 	
 	@EventHandler(priority=EventPriority.HIGHEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		Player p = event.getPlayer();
 		if (gimmicks.compassOn) {
-			if (event.getPlayer().getItemInHand().getType().equals(Material.COMPASS) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-				if(gimmicks.compassLastUse.get(event.getPlayer().getName().toString()) != null) {
-					int lastUse = gimmicks.compassLastUse.get(event.getPlayer().getName().toString());
+			if (p.getItemInHand().getType().equals(Material.COMPASS) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+				if(compassLastUse.containsKey(p.getName())) {
+					int lastUse = compassLastUse.get(p.getName().toString());
 					if(lastUse < 30) {
 						int timeLeft = 30 - lastUse;
-						event.getPlayer().sendMessage(ChatColor.RED + "You need to wait " + ChatColor.WHITE + Integer.toString(timeLeft) + " seconds before you can track again");
+						p.sendMessage(ChatColor.RED + "You need to wait " + ChatColor.WHITE + Integer.toString(timeLeft) + " seconds before you can track again");
 						event.setCancelled(true);
 						return;
 					}
 				}
 				double range = gimmicks.getConfig().getDouble("hungercompass.range", 500d);
 				Player target = null;
-				target = gimmicks.hungercompass.getNearest(event.getPlayer(), range);
+				target = gimmicks.hungercompass.getNearest(p, range);
 				if(target != null) {
-					event.getPlayer().setCompassTarget(target.getLocation());
+					p.setCompassTarget(target.getLocation());
 					if (gimmicks.getConfig().getBoolean("hungercompass.showplayer", false)) {
-						event.getPlayer().sendMessage(ChatColor.GREEN + "Tracking " + target.getDisplayName().toString());
+						p.sendMessage(ChatColor.GREEN + "Tracking " + target.getDisplayName().toString());
 					} else {
-						event.getPlayer().sendMessage(ChatColor.GREEN + "Tracking player...");
+						p.sendMessage(ChatColor.GREEN + "Tracking player...");
 					}
 				} else {
-					event.getPlayer().sendMessage(ChatColor.RED + "There is nobody in range.");
+					p.sendMessage(ChatColor.RED + "There is nobody in range.");
 				}
-				gimmicks.compassLastUse.put(event.getPlayer().getName().toString(), 0);
+				compassLastUse.put(event.getPlayer().getName().toString(), 0);
 				event.setCancelled(true);
 			}
 		}		

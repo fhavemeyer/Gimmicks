@@ -8,21 +8,20 @@ import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gimmicknetwork.gimmicks.listener;
+import com.gimmicknetwork.gimmicks.GimmickEventListener;
 import com.gimmicknetwork.gimmicks.teams.Teams;
 import com.gimmicknetwork.gimmicks.teams.TeamsCommandHandler;
 
 public final class Gimmick extends JavaPlugin {
 	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
-	public HashMap<String, Integer> compassLastUse = new HashMap<String, Integer>();
 	public boolean muteAll = false;
 	public boolean compassOn = getConfig().getBoolean("hungercompass.enabled", false);
 	public boolean introPlaying = false;
 	
 	public int chestDelay = this.getConfig().getInt("magicchests.respawn");
 	
-	listener listener = new listener(this);
-	hungercompass hungercompass = new hungercompass(this);
+	GimmickEventListener listener = new GimmickEventListener(this);
+	HungerCompass hungercompass = new HungerCompass(this);
 	
 	public void onEnable() {
 		CommandsHandler commandHandler = new CommandsHandler(this);
