@@ -1,10 +1,8 @@
 package com.gimmicknetwork.gimmicks;
 
-import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -15,8 +13,6 @@ import com.gimmicknetwork.gimmicks.teams.Teams;
 import com.gimmicknetwork.gimmicks.teams.TeamsCommandHandler;
 
 public final class Gimmick extends JavaPlugin {
-	public HashMap<String, Image> faceCache= new HashMap<String, Image>();
-	public HashMap<String, Integer> killStreak= new HashMap<String, Integer>();
 	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
 	public HashMap<String, Integer> compassLastUse = new HashMap<String, Integer>();
 	public boolean muteAll = false;

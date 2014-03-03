@@ -46,7 +46,7 @@ public class FaceManager {
 	}
 	
 	public BufferedImage getCachedFace(Player p) {
-		return faceCache.get(p.getName());
+		return getCachedFace(p.getName());
 	}
 	
 	public boolean hasFaceCached(String playerName) {
@@ -54,11 +54,11 @@ public class FaceManager {
 	}
 	
 	public boolean hasFaceCached(Player p) {
-		return faceCache.containsKey(p.getName());
+		return hasFaceCached(p.getName());
 	}
 	
 	public void flushCacheForPlayer(Player p) {
-		faceCache.remove(p.getName());
+		flushCacheForPlayer(p.getName());
 	}
 	
 	public void flushCacheForPlayer(String playerName) {
