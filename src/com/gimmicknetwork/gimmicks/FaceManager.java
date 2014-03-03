@@ -41,6 +41,18 @@ public class FaceManager {
 		}
 	}
 	
+	public void flushCacheForPlayer(Player p) {
+		faceCache.remove(p.getName());
+	}
+	
+	public void flushCacheForPlayer(String playerName) {
+		faceCache.remove(playerName);
+	}
+	
+	public void flushCache() {
+		faceCache.clear();
+	}
+	
 	public boolean hasFaceCached(String playerName) {
 		return faceCache.containsKey(playerName);
 	}
