@@ -11,6 +11,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gimmicknetwork.gimmicks.listener;
+import com.gimmicknetwork.gimmicks.teams.Teams;
 import com.gimmicknetwork.gimmicks.teams.TeamsCommandHandler;
 
 public final class Gimmick extends JavaPlugin {
@@ -79,10 +80,6 @@ public final class Gimmick extends JavaPlugin {
 	
 	public void onDisable() {
 		getLogger().info("[Gimmicks] plugin enabled!");
+		Teams.disable();
 	}
-	
-	public void addFaceCache(String playerName, Image i) {
-		faceCache.put(playerName, i);
-	}
-	
 }

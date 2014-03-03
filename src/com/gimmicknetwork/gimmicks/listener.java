@@ -29,8 +29,10 @@ import com.gimmicknetwork.gimmicks.teams.Teams;
 public class listener implements Listener {
 	
 	private Gimmick gimmicks; // pointer to your main class, unrequired if you don't need methods from the main class
+	private FaceManager faceCacheManager;
 	 
 	public listener(Gimmick gimmicks) {
+		faceCacheManager = new FaceManager(gimmicks);
 		this.gimmicks = gimmicks;
 	}
 	
@@ -90,22 +92,7 @@ public class listener implements Listener {
 	//load player faces into memory on join
 	@EventHandler
 	public void onAsyncPlayerLogin(AsyncPlayerPreLoginEvent event) {
-		
-		String p = event.getName();
-
-		try {
-			URL url = new URL("https://minotar.net/avatar/" + p + "/8.png");
-		    gimmicks.addFaceCache(p.toString(), ImageIO.read(url));
-		} catch (IOException e) {
-			gimmicks.getLogger().info("[Gimmicks] Failed to get skin from: " + "https://minotar.net/avatar/" + p + "/8.png, using default instead.");
-			try {
-				gimmicks.addFaceCache(p.toString(), ImageIO.read(gimmicks.getResource("_default.png")));
-			} catch (IOException e2) {
-				gimmicks.getLogger().info("[Gimmicks] Failed to load default face.");
-				gimmicks.addFaceCache(p.toString(), null);
-			}
-
-		}
+		faceCacheManager.cacheFace(event.getName());
 	}
 	
 	
@@ -124,9 +111,8 @@ public class listener implements Listener {
 				p.getWorld().strikeLightningEffect(p.getLocation().add(0, 100, 0));
 				
 				//start making our fancy death message
-				if (gimmicks.faceCache.get(p.getName().toString()) != null){
-					BufferedImage imageToSend;			
-					imageToSend = (BufferedImage) gimmicks.faceCache.get(p.getName().toString());
+				if (faceCacheManager.hasFaceCached(p)){
+					BufferedImage imageToSend = faceCacheManager.getCachedFace(p);
 					String slainMsg = p.getName().toString() + " was slain.";
 					String killerMsg = "";
 					String extraMsg = "Good night, sweet prince.";

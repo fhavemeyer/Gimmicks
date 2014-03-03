@@ -25,6 +25,10 @@ public class Teams {
 		return instance;
 	}
 	
+	public static void disable() {
+		instance = null;
+	}
+	
 	public void setTeam(Player p, String teamName, ChatColor teamColor) {
 		if (teamColor != null) {
 			teams.put(p.getName(), teamColor);
