@@ -12,10 +12,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.kitteh.tag.TagAPI;
 
-public class teams implements CommandExecutor {
+public class Teams implements CommandExecutor {
 	
 	private gimmicks gimmicks;
-	public teams(gimmicks gimmicks) {
+	public Teams(gimmicks gimmicks) {
 		this.gimmicks = gimmicks;
 	}
 	

@@ -11,11 +11,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.kitteh.tag.TagAPI;
 
-public class commands implements CommandExecutor 
+public class CommandsHandler implements CommandExecutor 
 {
 
 	private gimmicks gimmicks;
-	public commands(gimmicks gimmicks) {
+	public CommandsHandler(gimmicks gimmicks) {
 		this.gimmicks = gimmicks;
 	}
   

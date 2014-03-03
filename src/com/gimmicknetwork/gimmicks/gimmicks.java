@@ -10,7 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gimmicknetwork.gimmicks.teams;
+import com.gimmicknetwork.gimmicks.Teams;
 import com.gimmicknetwork.gimmicks.listener;
 
 public final class gimmicks extends JavaPlugin {
@@ -32,19 +32,23 @@ public final class gimmicks extends JavaPlugin {
 	hungercompass hungercompass = new hungercompass(this);
 	
 	public void onEnable() {
+		CommandsHandler commandHandler = new CommandsHandler(this);
+		Teams teamHandler = new Teams(this);
+		
+		
 		this.saveDefaultConfig();
 		this.getServer().getPluginManager().registerEvents(listener, this);
 		getLogger().info("[Gimmicks] plugin enabled!");
-		getCommand("team").setExecutor(new teams(this));
-		getCommand("teamtp").setExecutor(new teams(this));
-		getCommand("teamsetspawn").setExecutor(new teams(this));
-		getCommand("gimmicks").setExecutor(new commands(this));
-		getCommand("spreadall").setExecutor(new commands(this));
-		getCommand("setchest").setExecutor(new commands(this));
-		getCommand("setloot").setExecutor(new commands(this));
-		getCommand("muteall").setExecutor(new commands(this));
-		getCommand("healall").setExecutor(new commands(this));
-		getCommand("playintro").setExecutor(new commands(this));
+		getCommand("team").setExecutor(teamHandler);
+		getCommand("teamtp").setExecutor(teamHandler);
+		getCommand("teamsetspawn").setExecutor(teamHandler);
+		getCommand("gimmicks").setExecutor(commandHandler);
+		getCommand("spreadall").setExecutor(commandHandler);
+		getCommand("setchest").setExecutor(commandHandler);
+		getCommand("setloot").setExecutor(commandHandler);
+		getCommand("muteall").setExecutor(commandHandler);
+		getCommand("healall").setExecutor(commandHandler);
+		getCommand("playintro").setExecutor(commandHandler);
 		
 		//populate magic chests hashmap from saved chests
 		this.magicChests.clear();
