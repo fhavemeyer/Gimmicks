@@ -25,13 +25,13 @@ import org.kitteh.tag.TagAPI;
 
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
-import com.gimmicknetwork.gimmicks.gimmicks;
+import com.gimmicknetwork.gimmicks.Gimmick;
 
 public class listener implements Listener {
 	
-	private gimmicks gimmicks; // pointer to your main class, unrequired if you don't need methods from the main class
+	private Gimmick gimmicks; // pointer to your main class, unrequired if you don't need methods from the main class
 	 
-	public listener(gimmicks gimmicks) {
+	public listener(Gimmick gimmicks) {
 		this.gimmicks = gimmicks;
 	}
 	

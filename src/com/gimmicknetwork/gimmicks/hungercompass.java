@@ -29,8 +29,8 @@ import com.bobacadodl.imgmessage.ImageMessage;
 
 public class hungercompass {
 
-	private gimmicks gimmicks;
-	public hungercompass(gimmicks gimmicks) {
+	private Gimmick gimmicks;
+	public hungercompass(Gimmick gimmicks) {
 		this.gimmicks = gimmicks;
 	}
 	

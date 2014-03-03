@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gimmicknetwork.gimmicks.Teams;
 import com.gimmicknetwork.gimmicks.listener;
 
-public final class gimmicks extends JavaPlugin {
+public final class Gimmick extends JavaPlugin {
 	
 	//Hashmap for teams <player name><team ChatColor>
 	public HashMap<String, ChatColor> teams = new HashMap<String, ChatColor>();
@@ -33,7 +33,7 @@ public final class gimmicks extends JavaPlugin {
 	
 	public void onEnable() {
 		CommandsHandler commandHandler = new CommandsHandler(this);
-		Teams teamHandler = new Teams(this);
+		TeamsCommandHandler teamHandler = new TeamsCommandHandler(this);
 		
 		
 		this.saveDefaultConfig();

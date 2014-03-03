@@ -14,8 +14,8 @@ import org.kitteh.tag.TagAPI;
 public class CommandsHandler implements CommandExecutor 
 {
 
-	private gimmicks gimmicks;
-	public CommandsHandler(gimmicks gimmicks) {
+	private Gimmick gimmicks;
+	public CommandsHandler(Gimmick gimmicks) {
 		this.gimmicks = gimmicks;
 	}
   
