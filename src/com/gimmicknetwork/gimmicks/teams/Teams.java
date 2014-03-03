@@ -1,4 +1,4 @@
-package com.gimmicknetwork.gimmicks;
+package com.gimmicknetwork.gimmicks.teams;
 
 import java.util.Map.Entry;
 
@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.kitteh.tag.TagAPI;
+
+import com.gimmicknetwork.gimmicks.Gimmick;
 
 public class Teams {
 	

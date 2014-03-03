@@ -10,8 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gimmicknetwork.gimmicks.Teams;
 import com.gimmicknetwork.gimmicks.listener;
+import com.gimmicknetwork.gimmicks.teams.TeamsCommandHandler;
 
 public final class Gimmick extends JavaPlugin {
 	

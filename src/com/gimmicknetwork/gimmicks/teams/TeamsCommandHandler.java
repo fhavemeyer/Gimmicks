@@ -1,4 +1,4 @@
-package com.gimmicknetwork.gimmicks;
+package com.gimmicknetwork.gimmicks.teams;
 
 import java.util.Arrays;
 
@@ -9,6 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import com.gimmicknetwork.gimmicks.Gimmick;
 
 public class TeamsCommandHandler implements CommandExecutor {
 	private Gimmick gimmickPlugin;

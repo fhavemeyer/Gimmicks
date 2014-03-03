@@ -1,4 +1,4 @@
-package com.gimmicknetwork.gimmicks;
+package com.gimmicknetwork.gimmicks.teams;
 
 public interface TeamColors {
 	public static final String TEAM_RED = "red";
