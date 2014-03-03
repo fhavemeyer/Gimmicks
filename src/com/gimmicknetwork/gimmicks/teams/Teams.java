@@ -1,5 +1,6 @@
 package com.gimmicknetwork.gimmicks.teams;
 
+import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -8,19 +9,25 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.kitteh.tag.TagAPI;
 
-import com.gimmicknetwork.gimmicks.Gimmick;
-
 public class Teams {
 	
-	private Gimmick gimmickPlugin;
+	private static Teams instance = null;
+
+	public HashMap<String, ChatColor> teams = new HashMap<String, ChatColor>();
+	public HashMap<ChatColor, Location> teamSpawn = new HashMap<ChatColor, Location>();
 	
-	public Teams(Gimmick gimmicks) {
-		this.gimmickPlugin = gimmicks;
+	protected Teams() { }
+	
+	public static Teams getInstance() {
+		if (instance == null) {
+			instance = new Teams();
+		}
+		return instance;
 	}
 	
 	public void setTeam(Player p, String teamName, ChatColor teamColor) {
 		if (teamColor != null) {
-			this.gimmickPlugin.teams.put(p.getName(), teamColor);
+			teams.put(p.getName(), teamColor);
 			p.sendMessage("[TEAMS] Joined team: " + teamColor + teamName.toUpperCase());
 			TagAPI.refreshPlayer(p);
 		} else {
@@ -29,12 +36,12 @@ public class Teams {
 	}
 	
 	public void leaveTeam(Player p) {
-		this.gimmickPlugin.teams.remove(p.getName());
+		teams.remove(p.getName());
 		p.sendMessage("[TEAMS] Left team.");
 	}
 
 	public void teamTP (ChatColor t, Location loc) {
-		for (Entry<String, ChatColor> entry : this.gimmickPlugin.teams.entrySet())
+		for (Entry<String, ChatColor> entry : teams.entrySet())
 		{
 		    if (entry.getValue().equals(t)) {
 		    	Player p = Bukkit.getPlayer(entry.getKey());
@@ -46,7 +53,7 @@ public class Teams {
 	}
 	
 	public void teamSetSpawn (ChatColor t, Location loc) {
-		this.gimmickPlugin.teamSpawn.put(t, loc);
+		teamSpawn.put(t, loc);
 	}
 	
 }

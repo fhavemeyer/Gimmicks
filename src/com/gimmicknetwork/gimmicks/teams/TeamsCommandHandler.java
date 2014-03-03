@@ -14,11 +14,9 @@ import com.gimmicknetwork.gimmicks.Gimmick;
 
 public class TeamsCommandHandler implements CommandExecutor {
 	private Gimmick gimmickPlugin;
-	private Teams teamHandler;
 	
 	public TeamsCommandHandler(Gimmick plugin) {
 		this.gimmickPlugin = plugin;
-		this.teamHandler = new Teams(plugin);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -39,10 +37,10 @@ public class TeamsCommandHandler implements CommandExecutor {
 			if (args.length == 1) {
 				if (p.hasPermission("gimmicks.teams.use")) {
 					if (args[0].equalsIgnoreCase("leave")) {
-						this.teamHandler.leaveTeam(p);
+						Teams.getInstance().leaveTeam(p);
 					} else {
 						ChatColor color = getTeamColor(args[0]);
-						this.teamHandler.setTeam(p, args[0], color);
+						Teams.getInstance().setTeam(p, args[0], color);
 					}
 				} else {
 					p.sendMessage("[TEAMS] " + ChatColor.RED + "You don't have permission to set your team.");
@@ -54,9 +52,9 @@ public class TeamsCommandHandler implements CommandExecutor {
 					for (Player player : players) {
 						if (Arrays.asList(args).contains(player.getName().toString())) {
 							if (args[0].equalsIgnoreCase("leave")) {
-								this.teamHandler.leaveTeam(player);
+								Teams.getInstance().leaveTeam(player);
 							} else {
-								this.teamHandler.setTeam(player, args[0], color);
+								Teams.getInstance().setTeam(player, args[0], color);
 							}
 						}
 					}
@@ -71,7 +69,7 @@ public class TeamsCommandHandler implements CommandExecutor {
 				Location loc = p.getLocation();
 				ChatColor color = getTeamColor(args[0]);
 				if (color != null) {
-					this.teamHandler.teamTP(color, loc);
+					Teams.getInstance().teamTP(color, loc);
 				} else {
 					p.sendMessage("[TEAMS] Invalid team.");
 				}
@@ -83,7 +81,7 @@ public class TeamsCommandHandler implements CommandExecutor {
 				Location loc = p.getLocation();
 				ChatColor color = getTeamColor(args[0]);
 				if (color != null) {
-					this.teamHandler.teamSetSpawn(color, loc);
+					Teams.getInstance().teamSetSpawn(color, loc);
 				} else {
 					p.sendMessage("[TEAMS] Invalid team.");
 				}
