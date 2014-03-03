@@ -14,10 +14,6 @@ import com.gimmicknetwork.gimmicks.listener;
 import com.gimmicknetwork.gimmicks.teams.TeamsCommandHandler;
 
 public final class Gimmick extends JavaPlugin {
-	
-	//Hashmap for teams <player name><team ChatColor>
-	public HashMap<String, ChatColor> teams = new HashMap<String, ChatColor>();
-	public HashMap<ChatColor, Location> teamSpawn = new HashMap<ChatColor, Location>();
 	public HashMap<String, Image> faceCache= new HashMap<String, Image>();
 	public HashMap<String, Integer> killStreak= new HashMap<String, Integer>();
 	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();

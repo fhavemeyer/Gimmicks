@@ -9,7 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.kitteh.tag.TagAPI;
+
+import com.gimmicknetwork.gimmicks.teams.Teams;
 
 public class CommandsHandler implements CommandExecutor 
 {
@@ -27,10 +28,7 @@ public class CommandsHandler implements CommandExecutor
 				this.gimmicks.reloadConfig();
 				//clear all current teams if it's now disabled
 				if (!gimmicks.getConfig().getBoolean("teams.enabled", false)) {
-					gimmicks.teams.clear();
-					for (Player p : Bukkit.getOnlinePlayers()) {
-						TagAPI.refreshPlayer(p);
-					}
+					Teams.getInstance().clearAllTeams();
 					sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Teams cleared.");
 				}
 				sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Configuration reloaded.");

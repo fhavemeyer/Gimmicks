@@ -8,7 +8,6 @@ import javax.imageio.ImageIO;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,11 +20,11 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
-import org.kitteh.tag.TagAPI;
 
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
 import com.gimmicknetwork.gimmicks.Gimmick;
+import com.gimmicknetwork.gimmicks.teams.Teams;
 
 public class listener implements Listener {
 	
@@ -40,12 +39,12 @@ public class listener implements Listener {
 	 */
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onNameTag(AsyncPlayerReceiveNameTagEvent event) {
-		String name = event.getNamedPlayer().getName().toString();
-		ChatColor cc = gimmicks.teams.get(name);
+		String playerName = event.getNamedPlayer().getName();
+		ChatColor cc = Teams.getInstance().getTeamColor(playerName);
 		if (cc != null) {
-			event.setTag(cc + name);
+			event.setTag(cc + playerName);
 		} else {
-			event.setTag(name);
+			event.setTag(playerName);
 		}
 	}
 	
@@ -117,10 +116,7 @@ public class listener implements Listener {
 			Player p = (Player) event.getEntity();
 			// Teams - check if resetondeath is enabled and make the player leave their team
 			if (gimmicks.getConfig().getBoolean("teams.resetondeath")) {
-				if (gimmicks.teams.get(p.getName().toString()) != null) {
-					gimmicks.teams.remove(p.getName().toString());
-					TagAPI.refreshPlayer(p);
-				}
+				Teams.getInstance().removeFromTeam(p);
 			}
 			
 			if (gimmicks.getConfig().getBoolean("facedeathmessages.enabled", true)) {
@@ -176,14 +172,14 @@ public class listener implements Listener {
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent event) {
 		//check if teams are enabled
+		Player p = event.getPlayer();
 		if(!gimmicks.getConfig().getBoolean("teams.enabled")) {
 			return;
 		}
-		if (gimmicks.teams.get(event.getPlayer().getName().toString()) != null) {
-			ChatColor t = gimmicks.teams.get(event.getPlayer().getName().toString());
-			if (gimmicks.teamSpawn.get(t) != null) {
-				Location loc = gimmicks.teamSpawn.get(t);
-				event.setRespawnLocation(loc);
+		if (Teams.getInstance().isInTeam(p)) {
+			ChatColor teamColor = Teams.getInstance().getTeamColor(p);
+			if (Teams.getInstance().hasTeamSpawn(teamColor)) {
+				event.setRespawnLocation(Teams.getInstance().getTeamSpawn(teamColor));
 			}
 		}
 	}
