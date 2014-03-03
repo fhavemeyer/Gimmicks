@@ -18,7 +18,7 @@ public class Teams {
 	
 	protected Teams() { }
 	
-	public static Teams getInstance() {
+	public static Teams teamManager() {
 		if (instance == null) {
 			instance = new Teams();
 		}

@@ -40,7 +40,7 @@ public class listener implements Listener {
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onNameTag(AsyncPlayerReceiveNameTagEvent event) {
 		String playerName = event.getNamedPlayer().getName();
-		ChatColor cc = Teams.getInstance().getTeamColor(playerName);
+		ChatColor cc = Teams.teamManager().getTeamColor(playerName);
 		if (cc != null) {
 			event.setTag(cc + playerName);
 		} else {
@@ -116,7 +116,7 @@ public class listener implements Listener {
 			Player p = (Player) event.getEntity();
 			// Teams - check if resetondeath is enabled and make the player leave their team
 			if (gimmicks.getConfig().getBoolean("teams.resetondeath")) {
-				Teams.getInstance().removeFromTeam(p);
+				Teams.teamManager().removeFromTeam(p);
 			}
 			
 			if (gimmicks.getConfig().getBoolean("facedeathmessages.enabled", true)) {
@@ -176,10 +176,10 @@ public class listener implements Listener {
 		if(!gimmicks.getConfig().getBoolean("teams.enabled")) {
 			return;
 		}
-		if (Teams.getInstance().isInTeam(p)) {
-			ChatColor teamColor = Teams.getInstance().getTeamColor(p);
-			if (Teams.getInstance().hasTeamSpawn(teamColor)) {
-				event.setRespawnLocation(Teams.getInstance().getTeamSpawn(teamColor));
+		if (Teams.teamManager().isInTeam(p)) {
+			ChatColor teamColor = Teams.teamManager().getTeamColor(p);
+			if (Teams.teamManager().hasTeamSpawn(teamColor)) {
+				event.setRespawnLocation(Teams.teamManager().getTeamSpawn(teamColor));
 			}
 		}
 	}

@@ -37,10 +37,10 @@ public class TeamsCommandHandler implements CommandExecutor {
 			if (args.length == 1) {
 				if (p.hasPermission("gimmicks.teams.use")) {
 					if (args[0].equalsIgnoreCase("leave")) {
-						Teams.getInstance().leaveTeam(p);
+						Teams.teamManager().leaveTeam(p);
 					} else {
 						ChatColor color = getTeamColor(args[0]);
-						Teams.getInstance().setTeam(p, args[0], color);
+						Teams.teamManager().setTeam(p, args[0], color);
 					}
 				} else {
 					p.sendMessage("[TEAMS] " + ChatColor.RED + "You don't have permission to set your team.");
@@ -52,9 +52,9 @@ public class TeamsCommandHandler implements CommandExecutor {
 					for (Player player : players) {
 						if (Arrays.asList(args).contains(player.getName().toString())) {
 							if (args[0].equalsIgnoreCase("leave")) {
-								Teams.getInstance().leaveTeam(player);
+								Teams.teamManager().leaveTeam(player);
 							} else {
-								Teams.getInstance().setTeam(player, args[0], color);
+								Teams.teamManager().setTeam(player, args[0], color);
 							}
 						}
 					}
@@ -69,7 +69,7 @@ public class TeamsCommandHandler implements CommandExecutor {
 				Location loc = p.getLocation();
 				ChatColor color = getTeamColor(args[0]);
 				if (color != null) {
-					Teams.getInstance().teamTP(color, loc);
+					Teams.teamManager().teamTP(color, loc);
 				} else {
 					p.sendMessage("[TEAMS] Invalid team.");
 				}
@@ -81,7 +81,7 @@ public class TeamsCommandHandler implements CommandExecutor {
 				Location loc = p.getLocation();
 				ChatColor color = getTeamColor(args[0]);
 				if (color != null) {
-					Teams.getInstance().teamSetSpawn(color, loc);
+					Teams.teamManager().teamSetSpawn(color, loc);
 				} else {
 					p.sendMessage("[TEAMS] Invalid team.");
 				}

@@ -28,7 +28,7 @@ public class CommandsHandler implements CommandExecutor
 				this.gimmicks.reloadConfig();
 				//clear all current teams if it's now disabled
 				if (!gimmicks.getConfig().getBoolean("teams.enabled", false)) {
-					Teams.getInstance().clearAllTeams();
+					Teams.teamManager().clearAllTeams();
 					sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Teams cleared.");
 				}
 				sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Configuration reloaded.");
