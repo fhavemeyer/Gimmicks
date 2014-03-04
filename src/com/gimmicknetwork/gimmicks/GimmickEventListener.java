@@ -11,13 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
 import com.gimmicknetwork.gimmicks.Gimmick;
-import com.gimmicknetwork.gimmicks.teams.Teams;
 
 public class GimmickEventListener implements Listener {
 	
@@ -31,23 +28,6 @@ public class GimmickEventListener implements Listener {
 		this.gimmicks = gimmicks;
 	}
 	
-	/*
-	 * Teams
-	 */
-	@EventHandler(priority=EventPriority.NORMAL)
-	public void onNameTag(AsyncPlayerReceiveNameTagEvent event) {
-		String playerName = event.getNamedPlayer().getName();
-		ChatColor cc = Teams.teamManager().getTeamColor(playerName);
-		if (cc != null) {
-			event.setTag(cc + playerName);
-		} else {
-			event.setTag(playerName);
-		}
-	}
-	
-
-
-	
 	//load player faces into memory on join
 	@EventHandler
 	public void onAsyncPlayerLogin(AsyncPlayerPreLoginEvent event) {
@@ -60,10 +40,6 @@ public class GimmickEventListener implements Listener {
 	public void onDeath(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player p = (Player) event.getEntity();
-			// Teams - check if resetondeath is enabled and make the player leave their team
-			if (gimmicks.getConfig().getBoolean("teams.resetondeath")) {
-				Teams.teamManager().removeFromTeam(p);
-			}
 			
 			if (gimmicks.getConfig().getBoolean("facedeathmessages.enabled", true)) {
 				//THUNDER STRUCK, JUST LOOK AT THE MESS YOU MADE
@@ -110,23 +86,6 @@ public class GimmickEventListener implements Listener {
 			}
 		}
 	}
-	
-	//respawn at team spawn if set
-	@EventHandler
-	public void onRespawn(PlayerRespawnEvent event) {
-		//check if teams are enabled
-		Player p = event.getPlayer();
-		if(!gimmicks.getConfig().getBoolean("teams.enabled")) {
-			return;
-		}
-		if (Teams.teamManager().isInTeam(p)) {
-			ChatColor teamColor = Teams.teamManager().getTeamColor(p);
-			if (Teams.teamManager().hasTeamSpawn(teamColor)) {
-				event.setRespawnLocation(Teams.teamManager().getTeamSpawn(teamColor));
-			}
-		}
-	}
-	
 	
 	/*
 	 * Player mute	

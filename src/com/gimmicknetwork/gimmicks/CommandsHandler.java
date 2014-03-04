@@ -7,8 +7,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.gimmicknetwork.gimmicks.teams.Teams;
-
 public class CommandsHandler implements CommandExecutor 
 {
 
@@ -22,9 +20,10 @@ public class CommandsHandler implements CommandExecutor
 		if (cmd.getName().equalsIgnoreCase("gimmicks") && args.length == 1) {
 			if (args[0].equals("reload")) {
 				this.gimmicks.reloadConfig();
+				this.gimmicks.requestReloadEnabledModules(sender);
 				//clear all current teams if it's now disabled
 				if (!gimmicks.getConfig().getBoolean("teams.enabled", false)) {
-					Teams.teamManager().clearAllTeams();
+					//Teams.teamManager().clearAllTeams();
 					sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Teams cleared.");
 				}
 				sender.sendMessage("[" + ChatColor.GREEN + "Gimmicks" + ChatColor.WHITE + "] Configuration reloaded.");

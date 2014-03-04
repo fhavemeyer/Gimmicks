@@ -17,10 +17,6 @@ public class HungerGamesCommandHandler implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		/*
-		 * Magic Chests
-		 */
-		
 		if (cmd.getName().equalsIgnoreCase("setchest")) {
 			if(!(sender instanceof Player)) {
 				sender.sendMessage("[Gimmicks] Only players can run this command.");

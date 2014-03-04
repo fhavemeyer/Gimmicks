@@ -10,22 +10,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.gimmicknetwork.gimmicks.Gimmick;
-
 public class TeamsCommandHandler implements CommandExecutor {
-	private Gimmick gimmickPlugin;
+	private Teams teams;
 	
-	public TeamsCommandHandler(Gimmick plugin) {
-		this.gimmickPlugin = plugin;
+	public TeamsCommandHandler(Teams teams) {
+		this.teams = teams;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		//check if teams are disabled
-		if (gimmickPlugin.getConfig().getBoolean("teams.enabled", false)) {
-			sender.sendMessage("[Gimmicks] Teams are disabled.");
-			return true;
-		}
-		
 		if (!(sender instanceof Player)) {
 			sender.sendMessage("[TEAMS] Only players can run this command");
 			return false;
@@ -37,10 +30,10 @@ public class TeamsCommandHandler implements CommandExecutor {
 			if (args.length == 1) {
 				if (p.hasPermission("gimmicks.teams.use")) {
 					if (args[0].equalsIgnoreCase("leave")) {
-						Teams.teamManager().leaveTeam(p);
+						teams.teamManager().leaveTeam(p);
 					} else {
 						ChatColor color = getTeamColor(args[0]);
-						Teams.teamManager().setTeam(p, args[0], color);
+						teams.teamManager().setTeam(p, args[0], color);
 					}
 				} else {
 					p.sendMessage("[TEAMS] " + ChatColor.RED + "You don't have permission to set your team.");
@@ -52,9 +45,9 @@ public class TeamsCommandHandler implements CommandExecutor {
 					for (Player player : players) {
 						if (Arrays.asList(args).contains(player.getName().toString())) {
 							if (args[0].equalsIgnoreCase("leave")) {
-								Teams.teamManager().leaveTeam(player);
+								teams.teamManager().leaveTeam(player);
 							} else {
-								Teams.teamManager().setTeam(player, args[0], color);
+								teams.teamManager().setTeam(player, args[0], color);
 							}
 						}
 					}
@@ -69,7 +62,7 @@ public class TeamsCommandHandler implements CommandExecutor {
 				Location loc = p.getLocation();
 				ChatColor color = getTeamColor(args[0]);
 				if (color != null) {
-					Teams.teamManager().teamTP(color, loc);
+					teams.teamManager().teamTP(color, loc);
 				} else {
 					p.sendMessage("[TEAMS] Invalid team.");
 				}
@@ -81,7 +74,7 @@ public class TeamsCommandHandler implements CommandExecutor {
 				Location loc = p.getLocation();
 				ChatColor color = getTeamColor(args[0]);
 				if (color != null) {
-					Teams.teamManager().teamSetSpawn(color, loc);
+					teams.teamManager().teamSetSpawn(color, loc);
 				} else {
 					p.sendMessage("[TEAMS] Invalid team.");
 				}

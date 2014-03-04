@@ -13,10 +13,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
-import com.gimmicknetwork.gimmicks.*;
+import com.gimmicknetwork.gimmicks.GimmickModule;
 
-public class HungerGames {
-	private Gimmick gimmickPlugin;
+public class HungerGames extends GimmickModule {
 	private MagicChestManager magicChestsManager;
 	
 	public int chestDelay;
@@ -24,9 +23,10 @@ public class HungerGames {
 	private double compassRange;
 	private boolean showPlayerOnCompass;
 	
-	public HungerGames(Gimmick gimmick) {
-		gimmickPlugin = gimmick;
-		
+	public HungerGames() { }
+	
+	@Override
+	public void enable() {
 		chestDelay = gimmickPlugin.getConfig().getInt("magicchests.respawn");
 		compassOn = gimmickPlugin.getConfig().getBoolean("hungercompass.enabled", false);
 		compassRange = gimmickPlugin.getConfig().getDouble("hungercompass.range", 500d);
@@ -64,6 +64,11 @@ public class HungerGames {
 				}
 			}
 		}, 0, 20);
+	}
+	
+	@Override
+	public void disable() {
+		
 	}
 	
 	public MagicChestManager getChestManager() {
