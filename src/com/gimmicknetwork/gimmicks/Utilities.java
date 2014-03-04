@@ -2,9 +2,11 @@ package com.gimmicknetwork.gimmicks;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class Utilities {
@@ -55,5 +57,20 @@ public class Utilities {
 		}
 		
 		return null;
+	}
+	
+	public static Player getNearest(Player p, Double range) {
+		double distance = Double.POSITIVE_INFINITY;
+		
+		Player target = null;
+		for (Entity e : p.getNearbyEntities(range, range, range)) {
+			if (!(e instanceof Player) || e.equals(p)) continue;
+			double distanceTo = p.getLocation().distanceSquared(e.getLocation());
+			if (distanceTo > distance) continue;
+			distance = distanceTo;
+			target = (Player)e;
+		}
+		
+		return target;
 	}
 }

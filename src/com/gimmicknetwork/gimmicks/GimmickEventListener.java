@@ -28,8 +28,6 @@ public class GimmickEventListener implements Listener {
 	private Gimmick gimmicks; // pointer to your main class, unrequired if you don't need methods from the main class
 	private FaceManager faceCacheManager;
 	private KillStreakManager killStreakManager;
-	
-	private HashMap<String, Integer> compassLastUse = new HashMap<String, Integer>();
 	 
 	public GimmickEventListener(Gimmick gimmicks) {
 		faceCacheManager = new FaceManager(gimmicks);
@@ -51,44 +49,7 @@ public class GimmickEventListener implements Listener {
 		}
 	}
 	
-	/*
-	 * Hunger Compass
-	 */
-	
-	//Right click from compass
-	
-	@EventHandler(priority=EventPriority.HIGHEST)
-	public void onPlayerInteract(PlayerInteractEvent event) {
-		Player p = event.getPlayer();
-		if (gimmicks.compassOn) {
-			if (p.getItemInHand().getType().equals(Material.COMPASS) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-				if(compassLastUse.containsKey(p.getName())) {
-					int lastUse = compassLastUse.get(p.getName().toString());
-					if(lastUse < 30) {
-						int timeLeft = 30 - lastUse;
-						p.sendMessage(ChatColor.RED + "You need to wait " + ChatColor.WHITE + Integer.toString(timeLeft) + " seconds before you can track again");
-						event.setCancelled(true);
-						return;
-					}
-				}
-				double range = gimmicks.getConfig().getDouble("hungercompass.range", 500d);
-				Player target = null;
-				target = gimmicks.hungercompass.getNearest(p, range);
-				if(target != null) {
-					p.setCompassTarget(target.getLocation());
-					if (gimmicks.getConfig().getBoolean("hungercompass.showplayer", false)) {
-						p.sendMessage(ChatColor.GREEN + "Tracking " + target.getDisplayName().toString());
-					} else {
-						p.sendMessage(ChatColor.GREEN + "Tracking player...");
-					}
-				} else {
-					p.sendMessage(ChatColor.RED + "There is nobody in range.");
-				}
-				compassLastUse.put(event.getPlayer().getName().toString(), 0);
-				event.setCancelled(true);
-			}
-		}		
-	}
+
 
 	
 	//load player faces into memory on join

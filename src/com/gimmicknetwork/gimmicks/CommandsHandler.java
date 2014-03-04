@@ -48,53 +48,6 @@ public class CommandsHandler implements CommandExecutor
 			}
 		}
 		
-		/*
-		 * Magic Chests
-		 */
-		
-		if (cmd.getName().equalsIgnoreCase("setchest")) {
-			if(!(sender instanceof Player)) {
-				sender.sendMessage("[Gimmicks] Only players can run this command.");
-			} else {
-				Player p = (Player) sender;
-				Block b = p.getTargetBlock(null, 5);
-				if (b.getType() == Material.CHEST) {
-					if (gimmicks.magicChests.get(b.getLocation()) == null) {
-						p.sendMessage("[Gimmicks] Chest converted to Magic Chest");
-						gimmicks.hungercompass.setChest(b.getLocation());
-					} else {
-						p.sendMessage("[Gimmicks] This is already a Magic Chest");
-					}
-					
-				} else {
-					p.sendMessage("[Gimmicks] You need to target a chest.");
-				}
-				
-			}
-		}
-		
-		if (cmd.getName().equalsIgnoreCase("setloot")) {
-			if(!(sender instanceof Player)) {
-				sender.sendMessage("[Gimmicks] Only players can run this command.");
-			} else {
-				Player p = (Player) sender;
-				Block b = p.getTargetBlock(null, 5);
-				if (b.getType() == Material.CHEST) {
-					if (gimmicks.magicChests.get(b.getLocation()) == null) {
-						p.sendMessage("[Gimmicks] Chest content added to loot table.");
-						Chest c = (Chest) b.getState();
-						gimmicks.hungercompass.saveItemStack(c.getInventory().getContents());
-						c.getInventory().clear();
-					} else {
-						p.sendMessage("[Gimmicks] You can't add a Magic Chest's contents to the loot table, use a normal chest instead.");
-					}
-					
-				} else {
-					p.sendMessage("[Gimmicks] You need to target a chest.");
-				}
-			}
-		}
-		
 		if (cmd.getName().equalsIgnoreCase("muteall")) {
 			gimmicks.muteAll = !gimmicks.muteAll;
 			if (gimmicks.muteAll) {
@@ -114,19 +67,6 @@ public class CommandsHandler implements CommandExecutor
 				}
 			}
 			
-		}
-		
-		if (cmd.getName().equalsIgnoreCase("compasstracker")) {
-			gimmicks.compassOn = !gimmicks.compassOn;
-			if (gimmicks.muteAll) {
-				sender.sendMessage("[Gimmicks] Compass tracking enabled!");
-			} else {
-				sender.sendMessage("[Gimmicks] Compass tracking!");
-			}
-		}
-		
-		if (cmd.getName().equalsIgnoreCase("playintro")) {
-			gimmicks.hungercompass.playIntro();
 		}
 		
 		return true;
