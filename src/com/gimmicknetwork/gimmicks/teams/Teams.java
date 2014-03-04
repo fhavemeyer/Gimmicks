@@ -17,12 +17,13 @@ public class Teams extends GimmickModule {
 	
 	@Override
 	public void enable() {
-		gimmickPlugin.getCommand("team").setExecutor(commandHandler);
-		gimmickPlugin.getCommand("teamtp").setExecutor(commandHandler);
-		gimmickPlugin.getCommand("teamsetspawn").setExecutor(commandHandler);
+		gimmickPlugin.registerModuleForCommand(this, "team", commandHandler);
+		gimmickPlugin.registerModuleForCommand(this, "teamtp", commandHandler);
+		gimmickPlugin.registerModuleForCommand(this, "teamsetspawn", commandHandler);
+		
 		resetOnDeath = gimmickPlugin.getConfig().getBoolean("teams.resetondeath", false);
 		
-		gimmickPlugin.getServer().getPluginManager().registerEvents(new TeamsEventListener(teamManager, resetOnDeath), this.gimmickPlugin);
+		gimmickPlugin.registerModuleForEvents(this, new TeamsEventListener(teamManager, resetOnDeath));
 	}
 	
 	@Override

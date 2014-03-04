@@ -16,6 +16,7 @@ import com.bobacadodl.imgmessage.ImageMessage;
 import com.gimmicknetwork.gimmicks.GimmickModule;
 
 public class HungerGames extends GimmickModule {
+	private HungerGamesCommandHandler hgCommandHandler;
 	private MagicChestManager magicChestsManager;
 	
 	public int chestDelay;
@@ -34,14 +35,14 @@ public class HungerGames extends GimmickModule {
 		
 		magicChestsManager = new MagicChestManager(gimmickPlugin.getDataFolder(), gimmickPlugin.getLogger(), chestDelay);
 		
-		HungerGamesCommandHandler hgCommandHandler = new HungerGamesCommandHandler(this);
-		gimmickPlugin.getCommand("setchest").setExecutor(hgCommandHandler);
-		gimmickPlugin.getCommand("setloot").setExecutor(hgCommandHandler);
-		gimmickPlugin.getCommand("playintro").setExecutor(hgCommandHandler);
-		gimmickPlugin.getCommand("compasstracker").setExecutor(hgCommandHandler);
+		hgCommandHandler = new HungerGamesCommandHandler(this);
 		
-		HungerGamesEventListener eventListener = new HungerGamesEventListener(this, compassRange, showPlayerOnCompass);
-		gimmickPlugin.getServer().getPluginManager().registerEvents(eventListener, gimmickPlugin);
+		gimmickPlugin.registerModuleForCommand(this, "setchest", hgCommandHandler);
+		gimmickPlugin.registerModuleForCommand(this, "setloot", hgCommandHandler);
+		gimmickPlugin.registerModuleForCommand(this, "playintro", hgCommandHandler);
+		gimmickPlugin.registerModuleForCommand(this, "compasstracker", hgCommandHandler);
+		
+		gimmickPlugin.registerModuleForEvents(this, new HungerGamesEventListener(this, compassRange, showPlayerOnCompass));
 		
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(gimmickPlugin, new Runnable() {
 			@Override

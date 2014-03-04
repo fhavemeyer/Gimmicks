@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gimmicknetwork.gimmicks.GimmickEventListener;
@@ -16,12 +18,14 @@ import com.gimmicknetwork.gimmicks.teams.Teams;
 
 public final class Gimmick extends JavaPlugin {
 	public boolean muteAll = false;
-	public boolean introPlaying = false;
+	
+	private FaceManager faceCacheManager;
 	
 	private ArrayList<GimmickModule> gimmickModules = new ArrayList<GimmickModule>();
 
 	public void onEnable() {
 		GimmickCommandsHandler commandHandler = new GimmickCommandsHandler(this);
+		faceCacheManager = new FaceManager(this);
 		
 		this.saveDefaultConfig();
 		this.getServer().getPluginManager().registerEvents(new GimmickEventListener(this), this);
@@ -68,6 +72,19 @@ public final class Gimmick extends JavaPlugin {
 	public void onDisable() {
 		getLogger().info("[Gimmicks] plugin disabled!");
 		this.disableGimmickModules();
+	}
+	
+	public void registerModuleForEvents(GimmickModule g, Listener eventListener) {
+		getServer().getPluginManager().registerEvents(eventListener, this);
+	}
+	
+	public void registerModuleForCommand(GimmickModule g, String command, CommandExecutor commandExecutor) {
+		// here I will later be sure there aren't any overlapping commands, etc
+		getCommand(command).setExecutor(commandExecutor);
+	}
+	
+	public FaceManager faceCacheManager() {
+		return faceCacheManager;
 	}
 	
 	public BufferedImage loadImage(String url) {

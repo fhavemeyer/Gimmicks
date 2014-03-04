@@ -17,9 +17,7 @@ public class TeamsEventListener implements Listener {
 		this.teamManager = t;
 		this.resetOnDeath = resetOnDeath;
 	}
-	/*
-	 * Teams
-	 */
+
 	@EventHandler(priority=EventPriority.NORMAL)
 	public void onNameTag(AsyncPlayerReceiveNameTagEvent event) {
 		String playerName = event.getNamedPlayer().getName();
