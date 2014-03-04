@@ -40,7 +40,7 @@ public class CommandsHandler implements CommandExecutor
 				sender.sendMessage("[Gimmicks] Spreading players.");
 				for (Player p : Bukkit.getOnlinePlayers()) {
 					if (p != null) {
-						gimmicks.hungercompass.spreadPlayer(p.getWorld(), p, Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+						Utilities.spreadPlayer(p.getWorld(), p, Integer.parseInt(args[0]), Integer.parseInt(args[1]), Integer.parseInt(args[2]));
 					}
 				}
 			} else {
