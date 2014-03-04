@@ -9,11 +9,11 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
-public class TeamsEventHandler implements Listener {
+public class TeamsEventListener implements Listener {
 	private TeamManager teamManager;
 	private boolean resetOnDeath;
 	
-	public TeamsEventHandler(TeamManager t, boolean resetOnDeath) {
+	public TeamsEventListener(TeamManager t, boolean resetOnDeath) {
 		this.teamManager = t;
 		this.resetOnDeath = resetOnDeath;
 	}

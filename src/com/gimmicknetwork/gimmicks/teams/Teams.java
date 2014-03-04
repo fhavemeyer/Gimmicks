@@ -22,7 +22,7 @@ public class Teams extends GimmickModule {
 		gimmickPlugin.getCommand("teamsetspawn").setExecutor(commandHandler);
 		resetOnDeath = gimmickPlugin.getConfig().getBoolean("teams.resetondeath", false);
 		
-		gimmickPlugin.getServer().getPluginManager().registerEvents(new TeamsEventHandler(teamManager, resetOnDeath), this.gimmickPlugin);
+		gimmickPlugin.getServer().getPluginManager().registerEvents(new TeamsEventListener(teamManager, resetOnDeath), this.gimmickPlugin);
 	}
 	
 	@Override

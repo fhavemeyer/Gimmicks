@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gimmicknetwork.gimmicks.GimmickEventListener;
 import com.gimmicknetwork.gimmicks.hungergames.HungerGames;
+import com.gimmicknetwork.gimmicks.killstreaks.KillStreaks;
 import com.gimmicknetwork.gimmicks.teams.Teams;
 
 public final class Gimmick extends JavaPlugin {
@@ -31,6 +32,10 @@ public final class Gimmick extends JavaPlugin {
 		getCommand("muteall").setExecutor(commandHandler);
 		getCommand("healall").setExecutor(commandHandler);
 		// END GENERAL GIMMICK COMMANDS
+		
+		if (this.getConfig().getBoolean("killstreaks.enabled", false)) {
+			gimmickModules.add(new KillStreaks());
+		}
 		
 		if (this.getConfig().getBoolean("teams.enabled", false)) {
 			gimmickModules.add(new Teams());

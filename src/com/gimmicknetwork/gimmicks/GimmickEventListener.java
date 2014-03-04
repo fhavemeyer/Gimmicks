@@ -15,6 +15,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import com.bobacadodl.imgmessage.ImageChar;
 import com.bobacadodl.imgmessage.ImageMessage;
 import com.gimmicknetwork.gimmicks.Gimmick;
+import com.gimmicknetwork.gimmicks.killstreaks.KillStreakManager;
 
 public class GimmickEventListener implements Listener {
 	
