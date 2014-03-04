@@ -2,9 +2,6 @@ package com.gimmicknetwork.gimmicks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +17,6 @@ public class CommandsHandler implements CommandExecutor
 		this.gimmicks = gimmicks;
 	}
   
-	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
 		if (cmd.getName().equalsIgnoreCase("gimmicks") && args.length == 1) {

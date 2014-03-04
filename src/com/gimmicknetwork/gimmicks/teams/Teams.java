@@ -26,6 +26,8 @@ public class Teams {
 	}
 	
 	public static void disable() {
+		instance.teams.clear();
+		instance.teamSpawn.clear();
 		instance = null;
 	}
 	

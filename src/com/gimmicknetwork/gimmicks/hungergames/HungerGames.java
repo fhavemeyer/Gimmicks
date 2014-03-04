@@ -1,7 +1,6 @@
 package com.gimmicknetwork.gimmicks.hungergames;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -25,8 +24,6 @@ public class HungerGames {
 	private double compassRange;
 	private boolean showPlayerOnCompass;
 	
-	public HashMap<Location, Integer> magicChests = new HashMap<Location, Integer>();
-	
 	public HungerGames(Gimmick gimmick) {
 		gimmickPlugin = gimmick;
 		
@@ -43,11 +40,14 @@ public class HungerGames {
 		gimmickPlugin.getCommand("playintro").setExecutor(hgCommandHandler);
 		gimmickPlugin.getCommand("compasstracker").setExecutor(hgCommandHandler);
 		
+		HungerGamesEventListener eventListener = new HungerGamesEventListener(this, compassRange, showPlayerOnCompass);
+		gimmickPlugin.getServer().getPluginManager().registerEvents(eventListener, gimmickPlugin);
+		
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(gimmickPlugin, new Runnable() {
 			@Override
 			public void run() {
 				MagicChestManager chestManager = getChestManager();
-				for (Entry<Location, Integer> entry : magicChests.entrySet()) {
+				for (Entry<Location, Integer> entry : chestManager.getMagicChestsAsSet()) {
 					if (entry.getValue() >= chestDelay) {
 						if (entry.getKey().getBlock().getType() == Material.CHEST) {
 							Chest c = (Chest)entry.getKey().getBlock().getState();

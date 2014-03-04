@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.apache.commons.lang.RandomStringUtils;
@@ -122,6 +124,10 @@ public class MagicChestManager {
 			magicChests.put(l, magicChestRespawn);
 		}
 		pluginLogger.info("[Gimmicks] MagicChests.yml loaded");
+	}
+	
+	public Set<Entry<Location, Integer>> getMagicChestsAsSet() {
+		return magicChests.entrySet();
 	}
 	
 	public ItemStack[] randomItemStack() {

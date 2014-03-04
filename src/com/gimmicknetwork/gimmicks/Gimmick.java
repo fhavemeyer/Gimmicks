@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.gimmicknetwork.gimmicks.GimmickEventListener;
 import com.gimmicknetwork.gimmicks.hungergames.HungerGames;
-import com.gimmicknetwork.gimmicks.hungergames.HungerGamesCommandHandler;
 import com.gimmicknetwork.gimmicks.teams.Teams;
 import com.gimmicknetwork.gimmicks.teams.TeamsCommandHandler;
 
@@ -17,15 +16,14 @@ public final class Gimmick extends JavaPlugin {
 	public boolean muteAll = false;
 	public boolean introPlaying = false;
 	
-	GimmickEventListener eventListener = new GimmickEventListener(this);
-	HungerGames hungerGames;
+	private HungerGames hungerGames;
 	
 	public void onEnable() {
 		CommandsHandler commandHandler = new CommandsHandler(this);
 		TeamsCommandHandler teamHandler = new TeamsCommandHandler(this);
 		
 		this.saveDefaultConfig();
-		this.getServer().getPluginManager().registerEvents(eventListener, this);
+		this.getServer().getPluginManager().registerEvents(new GimmickEventListener(this), this);
 		getLogger().info("[Gimmicks] plugin enabled!");
 		getCommand("team").setExecutor(teamHandler);
 		getCommand("teamtp").setExecutor(teamHandler);
