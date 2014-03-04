@@ -1,7 +1,7 @@
 name: Gimmicks
 author: TeaJizzle
 version: 0.1.9
-main: com.gimmicknetwork.gimmicks.gimmicks
+main: com.gimmicknetwork.gimmicks.Gimmick
 
 depends: [TagAPI]
 
