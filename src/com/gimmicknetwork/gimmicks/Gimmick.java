@@ -20,7 +20,7 @@ public final class Gimmick extends JavaPlugin {
 	private ArrayList<GimmickModule> gimmickModules = new ArrayList<GimmickModule>();
 
 	public void onEnable() {
-		CommandsHandler commandHandler = new CommandsHandler(this);
+		GimmickCommandsHandler commandHandler = new GimmickCommandsHandler(this);
 		
 		this.saveDefaultConfig();
 		this.getServer().getPluginManager().registerEvents(new GimmickEventListener(this), this);

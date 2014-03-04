@@ -7,11 +7,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class CommandsHandler implements CommandExecutor 
+public class GimmickCommandsHandler implements CommandExecutor 
 {
 
 	private Gimmick gimmicks;
-	public CommandsHandler(Gimmick gimmicks) {
+	public GimmickCommandsHandler(Gimmick gimmicks) {
 		this.gimmicks = gimmicks;
 	}
   
