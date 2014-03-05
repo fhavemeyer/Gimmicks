@@ -44,8 +44,12 @@ commands:
     permission: gimmicks.admin
   playintro:
     description: "Play hunger games introduction."
-    usage: "Usage: /playinfo"
+    usage: "Usage: /playintro"
     permission: gimmicks.admin  
+  compasstracker:
+    description: "Toggles compass tracker."
+    usage: "Usage: /compasstracker"
+    permission: gimmicks.admin
 
 
 permissions:
