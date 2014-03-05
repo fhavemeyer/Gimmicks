@@ -18,7 +18,6 @@ public class TeamsCommandHandler implements CommandExecutor {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		Bukkit.getLogger().info("[TEAMS] Teams module got a command!");
 		//check if teams are disabled
 		if (!(sender instanceof Player)) {
 			sender.sendMessage("[TEAMS] Only players can run this command");
